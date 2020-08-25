@@ -16,27 +16,31 @@ enum SectionKind: Int, CaseIterable {
     var itemCount: Int {
         switch self { // sectionKind
         case .first :
-            return 2
-        default:
             return 1
+        case .second:
+            return 3
+        case .third:
+            return 2
         }
     }
     var nestedGroupHeight: NSCollectionLayoutDimension {
         switch self {
         case .first:
-            return .fractionalWidth(0.9)
-        default:
-            return.fractionalWidth(0.45)
+            return .fractionalWidth(0.7)
+        case .second:
+            return.fractionalWidth(0.7)
+        case .third:
+            return .fractionalWidth(0.7)
         }
     }
     var sectionTitle: String {
         switch self {
         case .first:
-            return "First Section"
+            return "Featured"
         case .second:
-            return "Second Section"
+            return "New to iPhone?"
         case .third:
-            return "Third Section"
+            return "Made for Kids"
         }
     }
 }
@@ -50,7 +54,7 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationItem.title = "Nested Groups and Orthogonal Scroling"
+        navigationItem.title = "Online App Store"
         configureCollectionView()
         configureDataSource()
     }
@@ -87,10 +91,10 @@ class ViewController: UIViewController {
             let itemSpacing: CGFloat = 5
             item.contentInsets = NSDirectionalEdgeInsets(top: itemSpacing, leading: itemSpacing, bottom: itemSpacing, trailing: itemSpacing)
             // group
-            let innerGroupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.50), heightDimension: .fractionalHeight(1.0))
+            let innerGroupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1.0))
             let innerGroup = NSCollectionLayoutGroup.vertical(layoutSize: innerGroupSize, subitem: item, count: sectionKind.itemCount) // 2 or 1
             
-            let nestedGroupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.90), heightDimension: sectionKind.nestedGroupHeight)
+            let nestedGroupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.98), heightDimension: sectionKind.nestedGroupHeight)
             let nestedGroup = NSCollectionLayoutGroup.horizontal(layoutSize: nestedGroupSize, subitems: [innerGroup])
             
             // section
