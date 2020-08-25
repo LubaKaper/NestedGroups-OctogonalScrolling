@@ -43,6 +43,17 @@ enum SectionKind: Int, CaseIterable {
             return "Made for Kids"
         }
     }
+    
+    var cellColor: UIColor {
+        switch self {
+        case .first:
+            return .systemYellow
+        case .second:
+            return .systemTeal
+        case .third:
+            return .systemPink
+        }
+    }
 }
 
 class ViewController: UIViewController {
@@ -51,6 +62,8 @@ class ViewController: UIViewController {
     
     typealias DataSource = UICollectionViewDiffableDataSource<SectionKind, Int>
     private var dataSource: DataSource!
+   
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -120,8 +133,11 @@ class ViewController: UIViewController {
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: LabelCell.reuseIdentifier, for: indexPath) as? LabelCell else {
                 fatalError("could not dequeue a LabelCell")
             }
+            guard let sectionKind = SectionKind(rawValue: indexPath.section) else {
+                fatalError()
+            }
             cell.textLabel.text = "\(item)"
-            cell.backgroundColor = .systemOrange
+            cell.backgroundColor = sectionKind.cellColor
             cell.layer.cornerRadius = 10
             return cell
         })
